@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Restaurant ordering app</title>
-</head>
-<body>
-  
-  
-  <script src="script.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Restaurant ordering app</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-bg">
+          <div class="header-text">
+            <h1 class="header-title">Jimmy's Dinner</h1>
+            <p class="header-subtitle">The best burgers and pizzas in town</p>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="food-card">
+          <p class="order-emoji">🍕</p>
+          <div class="food-info">
+            <p data-food-name="pizza" class="food-name">Pizza</p>
+            <span data-food-ingredients class="food-ingredients"
+              >pepperoni, mushroom, mozarella</span
+            >
+            <span data-food-cost class="food-cost">$14</span>
+          </div>
+          <button class="add-food-btn">+</button>
+        </div>
+        <div class="food-card">
+          <p class="order-emoji">🍔</p>
+          <div class="food-info">
+            <p data-food-name="pizza" class="food-name">Pizza</p>
+            <span data-food-ingredients class="food-ingredients"
+              >pepperoni, mushroom, mozarella</span
+            >
+            <span data-food-cost class="food-cost">$14</span>
+          </div>
+          <button class="add-food-btn">+</button>
+        </div>
+        <div class="food-card">
+          <p class="order-emoji">🍺</p>
+          <div class="food-info">
+            <p data-food-name="pizza" class="food-name">Pizza</p>
+            <span data-food-ingredients class="food-ingredients"
+              >pepperoni, mushroom, mozarella</span
+            >
+            <span data-food-cost class="food-cost">$14</span>
+          </div>
+          <button class="add-food-btn">+</button>
+        </div>
+        <div class="order-section">
+          <p class="order-title">Your order</p>
+          <div class="order-items">
+            <div class="order-item">
+              <p class="order-item-name">
+                Pizza <button class="remove">remove</button>
+                <span class="order-food-cost">$14</span>
+              </p>
+            </div>
+            <div class="order-item">
+              <p class="order-item-name">
+                Pizza <button class="remove">remove</button>
+                <span class="order-food-cost">$12</span>
+              </p>
+            </div>
+          </div>
+          <div class="total-price-section">
+            <p class="total-price">
+              Total price:
+              <span data-total-price class="item-total-price">$26</span>
+            </p>
+          </div>
+          <button class="complete-order">Complete order</button>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js" type="module" defer></script>
+  </body>
 </html>
