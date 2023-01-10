@@ -1,29 +1,16 @@
 import { menuArray as menu } from "./data.js";
 
-const foodSection = document.querySelector(".food-section");
-const orderSection = document.querySelector(".order-section");
+const mainSection = document.querySelector(".main");
 
-let sumAll = 0;
-let isRendered = false;
+let totalPrice = 0;
 
 document.addEventListener("click", (e) => {
   if (e.target.className === "add-food-btn") {
-    renderOrderSection(e.target.parentElement.dataset.foodid);
+    renderOrderItems(e.target.parentElement.dataset.foodid);
   }
 
   if (e.target.className === "remove-btn") {
-    const currentFood = getCurrentFood(
-      e.target.parentElement.parentElement.dataset.foodid
-    );
-    const orderItems = document.querySelector(".order-items");
-
-    removeOrderItem(e.target.parentElement.parentElement);
-    updatePrice();
-
-    if (orderItems.children.length === 0) {
-      removeOrderSection();
-      currentFood.quantity = 0;
-    }
+    removeOrderItems(e.target.parentElement.parentElement);
   }
 });
 
@@ -36,32 +23,49 @@ function getCurrentFood(food_id) {
   return currentFood[0];
 }
 
-function removeOrderItem(currentFoodObj) {
-  const currentFood = getCurrentFood(currentFoodObj.dataset.foodid);
-
-  currentFoodObj.remove();
-  sumAll -= currentFood.price * currentFood.quantity;
-  currentFood.quantity = 0;
-  currentFood.isRendered = false;
-}
-
-function removeOrderSection() {
-  orderSection.innerHTML = "";
-  isRendered = false;
-  sumAll = 0;
+function removeOrderItems(foodObj) {
+  const orderSectionItems = document.querySelector(".order-items");
 
   menu.forEach((food) => {
-    food.quantity = 0;
-    food.isRendered = false;
+    if (food.id == foodObj.dataset.foodid) {
+      foodObj.remove();
+      food.isRendered = false;
+      updatePrice(food);
+      food.quantity = 0;
+    }
   });
+
+  if (orderSectionItems.children.length === 0) {
+    document.querySelector(".order-section").classList.add("hidden");
+  }
 }
 
-function renderFood() {
+function updateQuantity(currentFood) {
+  currentFood.quantity += 1;
+
+  document.querySelector(
+    `[data-quantity="${currentFood.id}"]`
+  ).innerHTML = `${currentFood.quantity}x`;
+}
+
+function updatePrice(currentFood) {
+  const totalItemsPrice = document.querySelector(".items-total-price");
+
+  if (currentFood.isRendered) {
+    totalPrice += currentFood.price;
+  } else {
+    totalPrice -= currentFood.price * currentFood.quantity;
+  }
+  totalItemsPrice.textContent = `$${totalPrice}`;
+}
+
+function renderPage() {
   let foodHtml = "";
 
   menu.forEach((food) => {
     foodHtml += `
-            <div class="food-card" data-foodId="${food.id}">
+    <div class="food-section">
+        <div class="food-card" data-foodId="${food.id}">
           <p class="order-emoji">${food.emoji}</p>
           <div class="food-info">
             <p class="food-name">${food.name}</p>
@@ -71,25 +75,34 @@ function renderFood() {
             <span data-food-cost class="food-cost">$${food.price}</span>
           </div>
           <button class="add-food-btn">+</button>
-        </div>`;
+        </div>
+      </div>
+          `;
   });
 
-  foodSection.innerHTML = foodHtml;
+  foodHtml += `  <div class="order-section hidden">
+      <p class="order-title">Your order:</p>
+        <div class="order-items"></div>
+        <div class="total-price-section">
+          <p class="total-price">Total price: <span class="items-total-price">0$</span></p>
+          <button class="complete-order-btn">Complete order</button>
+        </div>
+   </div>`;
+
+  mainSection.innerHTML = foodHtml;
 }
 
-function updatePrice() {
-  document.querySelector(".items-total-price").innerHTML = `$${sumAll}`;
-}
-
-function renderOrderSection(foodId) {
+function renderOrderItems(foodId) {
   const currentFood = getCurrentFood(foodId);
-  sumAll += currentFood.price;
-  currentFood.quantity += 1;
+  const orderItems = document.querySelector(".order-items");
+  const orderSection = document.querySelector(".order-section");
 
-  if (!isRendered) {
-    orderSection.innerHTML = `
-    <p class="order-title">Your order:</p>
-          <div class="order-items">
+  if (orderSection.className.includes("hidden")) {
+    orderSection.classList.remove("hidden");
+  }
+
+  if (!currentFood.isRendered) {
+    orderItems.innerHTML += `
             <div class="order-item" data-foodId="${currentFood.id}">
               <p class="order-item-name">
                 ${currentFood.name} <button class="remove-btn">remove</button>
@@ -97,39 +110,12 @@ function renderOrderSection(foodId) {
                                 <span class = "item-quantity" data-quantity= "${currentFood.id}">${currentFood.quantity}x
               </p>
             </div>
-          </div>
-            <div class="total-price-section">
-            <p class="total-price">
-              Total price:
-              <span data-total-price class="items-total-price">$${sumAll}</span>
-            </p>
-          </div>
-          <button class="complete-order-btn">Complete order</button>
-          
           `;
-    isRendered = true;
-  } else if (isRendered) {
-    if (currentFood.isRendered) {
-      document.querySelector(
-        `[data-quantity="${currentFood.id}"]`
-      ).textContent = `${currentFood.quantity}x`;
-    } else {
-      document.querySelector(".order-items").innerHTML += `
-      <div class="order-item" data-foodId="${currentFood.id}">
-        <p class="order-item-name">
-          ${currentFood.name} <button class="remove-btn">remove</button>
-                <span class="order-food-cost">$${currentFood.price}</span>
-                                <span class = "item-quantity" data-quantity= "${currentFood.id}">${currentFood.quantity}x
-                
-        </p>
-      </div>
-      `;
-    }
-
-    updatePrice();
+    currentFood.isRendered = true;
   }
-  currentFood.isRendered = true;
-  console.log(currentFood.isRendered);
+
+  updateQuantity(currentFood);
+  updatePrice(currentFood);
 }
 
-renderFood();
+renderPage();
