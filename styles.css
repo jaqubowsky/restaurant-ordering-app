@@ -141,6 +141,10 @@ main {
   margin: 0 auto;
 }
 
+.hidden {
+  display: none;
+}
+
 .order-title {
   width: 200px;
   margin: 0 auto 40px auto;
