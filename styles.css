@@ -29,6 +29,10 @@ button {
   cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
+
 /* HEADER */
 
 .header-bg {
@@ -70,6 +74,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 300px;
 }
 
 .food-name {
@@ -96,12 +101,14 @@ main {
 /* EMOJIS */
 
 .order-emoji {
-  font-size: 5rem;
+  text-align: center;
+  font-size: 4rem;
 }
 
 /* BUTTONS */
 
-.add-food-btn {
+.add-food-btn,
+.reduce-food-btn {
   margin-left: auto;
   outline: none;
   border: 1px solid #252525;
@@ -111,6 +118,14 @@ main {
   padding: 5px 15px;
   text-align: center;
   text-decoration: none;
+}
+
+.reduce-food-btn {
+  font-size: 1rem;
+  padding: 5px 10px;
+  background-color: transparent;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .remove-btn {
@@ -141,10 +156,6 @@ main {
   margin: 0 auto;
 }
 
-.hidden {
-  display: none;
-}
-
 .order-title {
   width: 200px;
   margin: 0 auto 40px auto;
@@ -157,6 +168,7 @@ main {
   justify-content: center;
   border-bottom: 1px solid #8b8b8b;
   padding-bottom: 20px;
+  position: relative;
 }
 
 .order-item {
@@ -164,11 +176,10 @@ main {
 }
 
 .order-item-name {
+  display: flex;
+  text-align: center;
+  align-items: center;
   font-weight: 900;
-}
-
-.order-food-cost {
-  float: right;
 }
 
 .total-price {
@@ -177,10 +188,6 @@ main {
 }
 
 .items-total-price {
-  float: right;
-}
-
-.item-quantity {
   float: right;
 }
 
@@ -232,4 +239,31 @@ main {
   font-size: 1.5rem;
   margin: 10px 0;
   outline: none;
+}
+
+.modal-close-btn {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: red;
+}
+
+/* THANKS SECTION */
+
+.thanks-section {
+  padding: 40px;
+  background-color: rgba(170, 255, 0, 0.2);
+  color: green;
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 10px auto;
+  width: 90%;
+}
+
+.thanksName {
+  font-weight: bold;
 }

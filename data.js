@@ -26,4 +26,13 @@ export const menuArray = [
     emoji: "🍺",
     id: 2,
   },
+  {
+    name: "Sandwich",
+    ingredients: ["cheese, bread, butter, "],
+    price: 10,
+    quantity: 0,
+    isRendered: false,
+    emoji: "🥪",
+    id: 3,
+  },
 ];
